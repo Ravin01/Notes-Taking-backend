@@ -22,21 +22,21 @@ app.use(cors());
 
 app.use(Express.json());
 
-// const authMiddleWare=(req,res,next)=>{
-//     const token = req.headers['auth-token']
-//     try{
-//         jwt.verify(token, process.env.JWT_SECRET)
-//         next()
-//     }catch(err){
-//         console.error(err)
-//         res.status(401).send({msg:'unauthorized'})
-//     }
-// }
+const authMiddleWare=(req,res,next)=>{
+    const token = req.headers['auth-token']
+    try{
+        jwt.verify(token, process.env.JWT_SECRET)
+        next()
+    }catch(err){
+        console.error(err)
+        res.status(401).send({msg:'unauthorized'})
+    }
+}
 
 // Routes middleware
-app.use("/notes", notesRoute);
+app.use("/notes", authMiddleWare,  notesRoute);
 
-app.use("/folders", FoldersRoute);
+app.use("/folders",authMiddleWare,  FoldersRoute);
 
 app.use("/register", registerRoute);
 
