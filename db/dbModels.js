@@ -34,6 +34,7 @@ export const notesSchema = mongoose.Schema({
     },
     notes : [{
         id : 'string',
+        folder : 'string',
         title : 'string',
         note : "string",
         date : Date

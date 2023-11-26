@@ -4,13 +4,18 @@ import {v4} from 'uuid'
 
 export const notesRoute = Express.Router()
 
+
+// Create new user notes
+// Update all notes
 notesRoute.post('/', async(req,res)=>{
     const payload = req.body
     try{
         const checkUser = await notesModel.findOne({userEmail : payload.userEmail},{_id:0,userEmail:1,notes:1})
         if(checkUser){
             let note = payload.notes[0]
-            const updateUser = await notesModel.findOneAndUpdate({userEmail:payload.userEmail}, {$push : {"notes" :  {...note, id:v4()}}})
+            let timeStamp = Date.now()
+            let date = new Date(timeStamp)
+            const updateUser = await notesModel.findOneAndUpdate({userEmail:payload.userEmail}, {$push : {"notes" :  {...note, id:v4(), date : date}}})
             if(updateUser){
                 res.send("updated")
             }
@@ -37,13 +42,14 @@ console.log(err)
 })
 
 
-
-notesRoute.get('/:email', async(req,res)=>{
-    const {email} = req.params
+// get a data for respective user and folder data
+notesRoute.get('/:email/:folder', async(req,res)=>{
+    const {email, folder} = req.params
     try{
         const data = await notesModel.findOne({userEmail : email},{_id:0, userEmail:1, notes:1, folders : 1})
         if(data){
-            res.send(data)
+            let folderData = data.notes.filter((file) => file.folder === `/${folder}/create`)
+            res.send(folderData)
         }else{
             res.status(401).send('Users not yet use your application')
         }
@@ -53,12 +59,15 @@ notesRoute.get('/:email', async(req,res)=>{
     }
 })
 
-notesRoute.get('/:email/:id', async(req,res)=>{
-    const {email,id} = req.params
+// get a data for respective user, folder and single note
+notesRoute.get('/:email/:folder/:id', async(req,res)=>{
+    const {email,id,folder} = req.params
     try{
         const result = await notesModel.findOne({"userEmail" : email})
         if(result){
-                const note = result.notes.find(note => note.id === id);
+            let folderData = result.notes.filter((file) => file.folder === `/${folder}/create`)
+
+                const note = folderData.find(note => note.id === id);
                 console.log(note);
                 res.send(note)
         }else{
@@ -78,10 +87,11 @@ notesRoute.put('/:email/:id', async(req,res)=>{
         const result = await notesModel.findOne({"userEmail" : email})
         if(result){
             const note = result.notes.filter(note => note.id !== id)
-            const editedNote = {...payload.notes[0], id : id}
+            let timeStamp = Date.now()
+            let date = new Date(timeStamp)
+            const editedNote = {...payload.notes[0], id : id, date : date }
             note.push(editedNote)
             await notesModel.findOneAndUpdate({userEmail : email},{notes : note})
-                console.log(note);
                 res.send(note)
         }else{
             res.status(401).send('Users not yet use your application')

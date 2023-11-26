@@ -15,7 +15,7 @@ const local = "mongodb://localhost:27017/Notes-App";
 
 export const connectToDB = async () => {
   try {
-    const connect = await mongoose.connect(dbCloud);
+    const connect = await mongoose.connect(dbCloud);  
     if (connect) {
       console.log("DB connected successfully");
     } else {
