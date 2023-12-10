@@ -39,7 +39,7 @@ app.use("/notes", authMiddleWare,  notesRoute);
 // app.use("/notes", notesRoute);
 
 app.use("/folders",authMiddleWare,  FoldersRoute);
-// app.use("/folders", FoldersRoute);
+// app.use("/folders", FoldersRoute); 
 
 app.use("/daily", dailyRoute);
 
