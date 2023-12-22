@@ -11,7 +11,7 @@ FoldersRoute.post("/:email", async (req, res) => {
     const checkUser = await notesModel.findOne(
       { userEmail: email },
       { _id: 0, userEmail: 1, notes: 1, folders: 1 }
-    );
+    );  
     let note = payload.folder;
     let checkFolder = checkUser.folders.find((n) => n === note);
     if (checkUser && !checkFolder) {

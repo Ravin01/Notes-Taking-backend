@@ -13,7 +13,7 @@ loginRoute.post("/", async (req, res) => {
       { userEmail: payload.userEmail },
       { _id: 0, password: 1, userName: 1, userEmail: 1 }
     );
-    if (checkUser) {
+    if (checkUser) {  
       bcrypt.compare(payload.password, checkUser.password, (err, result) => {
         if (!result) {
           const response = checkUser.toObject();

@@ -12,7 +12,7 @@ registerRoute.post("/", async (req, res) => {
     const checkUser = await registrationModel.findOne({
       userEmail: payload.userEmail,
     });
-    if (checkUser) {
+    if (checkUser) {  
       const response = checkUser.toObject();
       res.status(401).send(response);
     } else {

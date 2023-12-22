@@ -13,7 +13,7 @@ const dbCloud = `mongodb+srv://${dbUsername}:${dbPassword}@${cluster}/${dbName}?
 
 const local = "mongodb://localhost:27017/Notes-App";
 
-export const connectToDB = async () => { 
+export const connectToDB = async () => {   
   try {
     const connect = await mongoose.connect(dbCloud);
     if (connect) {

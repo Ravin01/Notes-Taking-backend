@@ -37,7 +37,7 @@ export const notesSchema = mongoose.Schema({
       title: "string",
       note: "string",
       date: Date,
-    },
+    },  
   ],
   dailyTask: [
     {

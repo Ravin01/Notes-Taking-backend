@@ -11,7 +11,7 @@ export let email = [];
 forgotPassRoute.post("/", async (req, res) => {
   const payload = req.body.userEmail;
   email = [];
-  email.push(payload);
+  email.push(payload);  
   try {
     const validUser = await registrationModel.findOne({ userEmail: payload });
     if (validUser) {

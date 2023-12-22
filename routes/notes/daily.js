@@ -126,7 +126,7 @@ dailyRoute.put("/:email/:id/:nano/:mode", async (req, res) => {
         const updatedMode = {
             taskId: findTask.taskId,
             name: findTask.name,
-            mode: mode
+            mode: mode 
           }
           findData.task.splice(findIndexTask, 1, updatedMode)
             arr.splice(findIndex, 1, findData)

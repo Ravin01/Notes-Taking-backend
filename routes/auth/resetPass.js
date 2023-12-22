@@ -11,7 +11,7 @@ resetPasswordRoute.post("/", async (req, res) => {
   console.log(email[0])
   try {
     const data = await registrationModel.find({ userEmail: email[0] });
-    if (data) {
+    if (data) {  
       bcrypt.hash(payload, 10, async (err, hash) => {
         if (err) {
           res.status(500).send("Error while hash password");

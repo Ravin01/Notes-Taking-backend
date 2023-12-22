@@ -23,7 +23,7 @@ notesRoute.post("/", async (req, res) => {
       );
       if (updateUser) {
         res.send("updated");
-      }
+      }  
     } else {
       const objectEdit = {
         userEmail: payload.userEmail,
