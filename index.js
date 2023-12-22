@@ -33,7 +33,7 @@ const authMiddleWare = (req, res, next) => {
     res.status(401).send({ msg: "unauthorized" });
   }
 };
-
+ 
 // Routes middleware
 app.use("/notes", authMiddleWare,  notesRoute);
 // app.use("/notes", notesRoute);
